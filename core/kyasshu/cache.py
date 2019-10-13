@@ -17,4 +17,4 @@ class Cache(CacheInterface):
         return self._backend.save(id, data, lifetime)
 
     def delete(self, id):
-        return self._backend.delte(id)
+        return self._backend.delete(id)

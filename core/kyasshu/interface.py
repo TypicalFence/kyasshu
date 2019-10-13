@@ -2,6 +2,10 @@ from abc import ABC, abstractmethod
 
 
 class CacheInterface(ABC):
+    """Base Interface of Kyasshu.
+
+    It defines all essential methods needed for cache.
+    """
 
     @abstractmethod
     def fetch(self, id):
@@ -12,7 +16,7 @@ class CacheInterface(ABC):
         pass
 
     @abstractmethod
-    def save(self, id, data, lifetime):
+    def save(self, id, data, lifetime=None):
         pass
 
     @abstractmethod
@@ -21,7 +25,13 @@ class CacheInterface(ABC):
 
 
 class CacheBackend(CacheInterface):
+    """Abstract base class for CacheBackends.
+
+    It extends the CacheInterface and alters it minimally.
+
+    It's mainly used to differentiate backends from Kyasshu's Cache class.
+    """
 
     @abstractmethod
-    def save(self, id, data, lifetime=None):
+    def save(self, id, data, lifetime):
         pass
