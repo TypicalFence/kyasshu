@@ -9,7 +9,7 @@ I am very bad with comming up with names...
 
 ## usage
 
-"""python
+```python
 import time
 from kyasshu import Cache, MemoryBackend
 
@@ -27,4 +27,4 @@ print(uncool)
 print(cache.fetch("timed"))
 time.sleep(5)
 print(cache.fetch("timed"))
-"""
+```
