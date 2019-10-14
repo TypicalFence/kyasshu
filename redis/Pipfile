@@ -12,6 +12,7 @@ flake8 = "*"
 [packages]
 kyasshu = {editable = true,path = "./../core"}
 redis = "*"
+flake8-quotes = "*"
 
 [scripts]
 test = "python -m pytest -v"
