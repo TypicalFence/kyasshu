@@ -13,9 +13,6 @@ flake8 = "*"
 kyasshu = {editable = true,path = "./../core"}
 redis = "*"
 
-[requires]
-python_version = "3.6"
-
 [scripts]
 test = "python -m pytest -v"
 coverage = "bash ./scripts/coverage.sh"
