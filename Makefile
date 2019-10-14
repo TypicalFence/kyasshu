@@ -20,3 +20,7 @@ test: $(locks) ## Test all packages
 coverage: $(locks) ## Print the test coverage of all packages
 	-$(MAKE) -C core coverage
 	$(MAKE) -C redis coverage
+
+clean:
+	-$(MAKE) -C core clean
+	$(MAKE) -C redis clean 

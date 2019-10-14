@@ -1,4 +1,4 @@
-.PHONY: test coverage lint
+.PHONY: test coverage lint clean
 
 test:
 	pipenv run test
@@ -8,3 +8,7 @@ coverage:
 
 lint:
 	pipenv run lint
+
+clean:
+	-pipenv --rm
+	rm -f Pipfile.lock
