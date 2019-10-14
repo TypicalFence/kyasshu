@@ -12,9 +12,6 @@ class RedisCache(CacheBackend):
 
     def fetch(self, id):
         data = self._redis.get(id)
-        print("lol")
-        print(data)
-        print("lol")
         if data is not None:
             json_str = data.decode("utf8")
             try:
