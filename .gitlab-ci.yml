@@ -1,0 +1,68 @@
+image: "python:3-buster"
+
+variables:
+    PIP_CACHE_DIR: $CI_PROJECT_DIR/.cache/pip
+    PIPENV_CACHE_DIR: $CI_PROJECT_DIR/.cache/pipenv
+
+cache:
+  paths:
+    - $PIP_CACHE_DIR
+    - $PIPENV_CACHE_DIR
+
+stages:
+  - lint
+  - test
+  - coverage
+
+before_script:
+  - python --version
+  - pip install pipenv
+
+# ---------------------------------------------------------
+# lint 
+# ---------------------------------------------------------
+core-lint:
+    stage: lint
+    script:
+        - cd core
+        - pipenv install --dev
+        - pipenv run lint
+
+redis-lint:
+    stage: lint
+    script:
+        - cd redis
+        - pipenv install --dev
+        - pipenv run lint
+
+# ---------------------------------------------------------
+# test
+# ---------------------------------------------------------
+core-test:
+    stage: test
+    script:
+        - cd core
+        - pipenv run test
+
+redis-test:
+    stage: test
+    script:
+        - cd redis
+        - pipenv run test
+
+# ---------------------------------------------------------
+# coverage
+# ---------------------------------------------------------
+core-cov:
+    stage: coverage
+    coverage: '/TOTAL.*\s+(\d+%)$/'
+    script:
+        - cd core
+        - pipenv run coverage
+
+redis-cov:
+    stage: coverage
+    coverage: '/TOTAL.*\s+(\d+%)$/'
+    script:
+        - cd redis
+        - pipenv run coverage
