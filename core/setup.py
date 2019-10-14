@@ -5,8 +5,8 @@ from setuptools import setup
 setup(
     name="kyasshu",
     version="0.0.1",
-    description='environment agnostic caching',
-    author='Alex Fence',
+    description="environment agnostic caching",
+    author="Alex Fence",
     packages=["kyasshu"],
     classifiers=[
         "Programming Language :: Python",

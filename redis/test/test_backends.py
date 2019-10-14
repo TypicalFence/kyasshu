@@ -1,7 +1,7 @@
-import pytest
-import fakeredis
-from kyasshu_redis import RedisCache
 from kyasshu.test import BackendTest
+from kyasshu_redis import RedisCache
+import fakeredis
+
 
 class RedisBackendTest(BackendTest):
     __test__ = True
