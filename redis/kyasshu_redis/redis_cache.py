@@ -1,6 +1,17 @@
 import json
 from kyasshu import CacheBackend
 
+def isOneOf(value, types):
+    if len(types) == 0:
+        return False
+    
+    current_type = types.pop()
+    
+    if type(value) is current_type:
+        return True
+    else:
+        return isOneOf(value, types)
+
 
 class RedisCache(CacheBackend):
 
@@ -11,35 +22,24 @@ class RedisCache(CacheBackend):
     def fetch(self, id):
         data = self._redis.get(id)
 
-        # TODO remove json, use redis hash instead
         if data is not None:
             try:
+                # try to decode json
                 json_str = data.decode("utf8")
                 json_data = json.loads(json_str)
                 return json_data
 
-            except UnicodeDecodeError:
+            except Exception:
+                # return raw value
                 return data
-
-            except ValueError:
-                # FIXME this is very bad
-                # maybe we should change the interface
-                # this method feels very galaxy brain
-                try:
-                    str_data = data.decode("utf8")
-                    if len(str_data) > 0:
-                        return str_data
-
-                except UnicodeDecodeError:
-                    return data
-
-            return data
-
+                
     def contains(self, id):
         return self._redis.exists(id) > 0
 
     def save(self, id, data, lifetime):
-        if type(data) is dict:
+        # encode value as json becuase redis can only store byte-strings
+        # also dicts can't be stored otherwhise
+        if isOneOf(data, [dict, str, int, bool, None]):
             data = json.dumps(data)
 
         return self._redis.set(id, data, lifetime)
