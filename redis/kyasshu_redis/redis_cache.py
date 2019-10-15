@@ -1,16 +1,17 @@
 import json
 from kyasshu import CacheBackend
 
-def isOneOf(value, types):
+
+def is_one_of(value, types):
     if len(types) == 0:
         return False
-    
+
     current_type = types.pop()
-    
+
     if type(value) is current_type:
         return True
     else:
-        return isOneOf(value, types)
+        return is_one_of(value, types)
 
 
 class RedisCache(CacheBackend):
@@ -32,14 +33,14 @@ class RedisCache(CacheBackend):
             except Exception:
                 # return raw value
                 return data
-                
+
     def contains(self, id):
         return self._redis.exists(id) > 0
 
     def save(self, id, data, lifetime):
         # encode value as json becuase redis can only store byte-strings
         # also dicts can't be stored otherwhise
-        if isOneOf(data, [dict, str, int, bool, None]):
+        if is_one_of(data, [dict, str, int, bool, None]):
             data = json.dumps(data)
 
         return self._redis.set(id, data, lifetime)
